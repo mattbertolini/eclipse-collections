@@ -40,6 +40,17 @@ class ListMultimapAssert_ContainsKeys_Test
     }
 
     @Test
+    void failsMissingKey()
+    {
+        ImmutableListMultimap<String, String> multimap = Multimaps.immutable.list.with("Key1", "Value1", "Key2", "Value2");
+        assertThatExceptionOfType(AssertionError.class)
+                .isThrownBy(() -> ListMultimapAssert.assertThat(multimap).containsKeys("Key3"))
+                .withMessageContaining("Expecting actual")
+                .withMessageContaining("to contain key")
+                .withMessageContaining("Key3");
+    }
+
+    @Test
     void failsNullMultimap()
     {
         ImmutableListMultimap<String, String> multimap = null;
