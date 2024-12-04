@@ -20,6 +20,7 @@ import static org.assertj.core.error.ShouldBeNullOrEmpty.shouldBeNullOrEmpty;
 import static org.assertj.core.error.ShouldContainKeys.shouldContainKeys;
 import static org.assertj.core.error.ShouldHaveSize.shouldHaveSize;
 import static org.assertj.core.error.ShouldHaveSizeBetween.shouldHaveSizeBetween;
+import static org.assertj.core.error.ShouldHaveSizeGreaterThan.shouldHaveSizeGreaterThan;
 import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
 
 public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert<SELF, ACTUAL, KEY, VALUE>, ACTUAL extends Multimap<KEY, VALUE>, KEY, VALUE>
@@ -61,6 +62,15 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
             return this.myself;
         }
         throw this.assertionError(shouldHaveSizeBetween(this.actual, actualSize, lowerBoundary, higherBoundary));
+    }
+
+    public SELF hasSizeGreaterThan(int expected) {
+        this.isNotNull();
+        int actualSize = this.actual.size();
+        if (actualSize > expected) {
+            return this.myself;
+        }
+        throw this.assertionError(shouldHaveSizeGreaterThan(this.actual, actualSize, expected));
     }
 
     /**
