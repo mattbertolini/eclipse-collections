@@ -14,6 +14,7 @@ import org.assertj.core.api.AbstractObjectAssert;
 import org.eclipse.collections.api.multimap.Multimap;
 
 import static org.assertj.core.error.ShouldBeEmpty.shouldBeEmpty;
+import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
 
 public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert<SELF, ACTUAL, KEY, VALUE>,
         ACTUAL extends Multimap<KEY, VALUE>,
@@ -33,5 +34,15 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
         {
             throw this.assertionError(shouldBeEmpty(this.actual));
         }
+    }
+
+    public SELF isNotEmpty()
+    {
+        this.isNotNull();
+        if (!this.actual.isEmpty())
+        {
+            return this.myself;
+        }
+        throw this.assertionError(shouldNotBeEmpty());
     }
 }
