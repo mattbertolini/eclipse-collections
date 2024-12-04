@@ -29,6 +29,14 @@ import static org.assertj.core.error.ShouldHaveSizeGreaterThan.shouldHaveSizeGre
 import static org.assertj.core.error.ShouldHaveSizeLessThan.shouldHaveSizeLessThan;
 import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
 
+/**
+ * Base class for all implementations of assertions for {@link Multimap}s.
+ *
+ * @param <SELF> the "self" type of this assertion class.
+ * @param <ACTUAL> the type of the "actual" value.
+ * @param <KEY> the type of keys in the Multimap.
+ * @param <VALUE> the type of values in the Multimap.
+ */
 public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert<SELF, ACTUAL, KEY, VALUE>, ACTUAL extends Multimap<KEY, VALUE>, KEY, VALUE>
         extends AbstractObjectAssert<SELF, ACTUAL>
 {
