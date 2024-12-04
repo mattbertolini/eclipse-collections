@@ -43,12 +43,14 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
      * Verifies that the {@link Multimap} is empty.
      * <p>
      * Example:
-     * <pre>{@code // assertion will pass
+     * <pre>{@code
+     * // assertion will pass
      * assertThat(Multimaps.mutable.list.empty()).isEmpty();
      *
      * // assertion will fail
      * Multimap<String, String> multimap = Multimaps.mutable.list.with("Key", "Value");
-     * assertThat(multimap).isEmpty();}</pre>
+     * assertThat(multimap).isEmpty();
+     * }</pre>
      *
      * @throws AssertionError if the {@link Multimap} of values is not empty.
      */
