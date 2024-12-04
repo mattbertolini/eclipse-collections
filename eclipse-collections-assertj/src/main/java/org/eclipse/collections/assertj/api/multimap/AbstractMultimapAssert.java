@@ -26,6 +26,7 @@ import static org.assertj.core.error.ShouldContainKeys.shouldContainKeys;
 import static org.assertj.core.error.ShouldHaveSize.shouldHaveSize;
 import static org.assertj.core.error.ShouldHaveSizeBetween.shouldHaveSizeBetween;
 import static org.assertj.core.error.ShouldHaveSizeGreaterThan.shouldHaveSizeGreaterThan;
+import static org.assertj.core.error.ShouldHaveSizeLessThan.shouldHaveSizeLessThan;
 import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
 
 public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert<SELF, ACTUAL, KEY, VALUE>, ACTUAL extends Multimap<KEY, VALUE>, KEY, VALUE>
@@ -63,6 +64,7 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
         return this.containsForProxy(pairs);
     }
 
+    @SuppressWarnings("MethodCanBeVariableArityMethod")
     protected SELF containsForProxy(Pair<KEY, VALUE>[] entries)
     {
         this.isNotNull();
@@ -107,6 +109,17 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
             return this.myself;
         }
         throw this.assertionError(shouldHaveSizeGreaterThan(this.actual, actualSize, expected));
+    }
+
+    public SELF hasSizeLessThan(int expected)
+    {
+        this.isNotNull();
+        int actualSize = this.actual.size();
+        if (actualSize < expected)
+        {
+            return this.myself;
+        }
+        throw this.assertionError(shouldHaveSizeLessThan(this.actual, actualSize, expected));
     }
 
     /**
