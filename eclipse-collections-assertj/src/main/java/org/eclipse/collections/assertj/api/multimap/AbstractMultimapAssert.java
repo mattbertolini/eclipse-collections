@@ -87,6 +87,21 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
         }
     }
 
+    /**
+     * Verifies that the {@link Multimap} is not empty.
+     * <p>
+     * Example:
+     * <pre>{@code
+     * // assertion will pass
+     * Multimap<String, String> multimap = Multimaps.mutable.list.with("Key", "Value");
+     * assertThat(multimap).isNotEmpty();
+     *
+     * // assertion will fail
+     * assertThat(Multimaps.mutable.list.empty()).isNotEmpty();
+     * }</pre>
+     *
+     * @throws AssertionError if the {@link Multimap} of values is empty.
+     */
     public SELF isNotEmpty()
     {
         this.isNotNull();
@@ -97,6 +112,25 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
         throw this.assertionError(shouldNotBeEmpty());
     }
 
+    /**
+     * Verifies that the {@link Multimap} is null or empty.
+     * <p>
+     * Example:
+     * <pre>{@code
+     * // assertions that will pass
+     * Multimap<String, String> multimap = null;
+     * assertThat(multimap).isNullOrEmpty();
+     *
+     * Multimap<String, String> emptyMultimap = Multimaps.mutable.list.empty();
+     * assertThat(emptyMultimap).isNullOrEmpty();
+     *
+     * // assertion will fail
+     * Multimap<String, String> multimapWithElements = Multimaps.mutable.list.with("Key", "Value");
+     * assertThat(multimapWithElements).isNullOrEmpty();
+     * }</pre>
+     *
+     * @throws AssertionError if the {@link Multimap} is neither null nor empty.
+     */
     public void isNullOrEmpty()
     {
         if (this.actual == null || this.actual.isEmpty())
