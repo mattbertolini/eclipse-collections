@@ -78,6 +78,25 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
         throw this.assertionError(shouldContain(this.actual, entries, entriesNotFound));
     }
 
+    /**
+     * Verifies that the number of values in the {@link Multimap} is equal to the given one.
+     * <p>
+     * Example:
+     * <pre>{@code
+     * Multimap<String, String> multimap = Multimaps.mutable.list.with("Key", "Value");
+     *
+     * // assertion will pass
+     * assertThat(multimap).hasSize(1);
+     *
+     * // assertions will fail
+     * assertThat(multimap).hasSize(0);
+     * assertThat(multimap).hasSize(1);
+     * }</pre>
+     *
+     * @param expected the expected size of the {@link Multimap}.
+     * @return {@code this} assertion object.
+     * @throws AssertionError if the actual size of the {@link Multimap} is not equal to the expected size.
+     */
     public SELF hasSize(int expected)
     {
         this.isNotNull();
