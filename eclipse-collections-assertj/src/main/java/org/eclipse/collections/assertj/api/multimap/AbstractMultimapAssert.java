@@ -11,9 +11,12 @@
 package org.eclipse.collections.assertj.api.multimap;
 
 import org.assertj.core.api.AbstractObjectAssert;
+import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.multimap.Multimap;
+import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
 
 import static org.assertj.core.error.ShouldBeEmpty.shouldBeEmpty;
+import static org.assertj.core.error.ShouldContainKeys.shouldContainKeys;
 import static org.assertj.core.error.ShouldHaveSize.shouldHaveSize;
 import static org.assertj.core.error.ShouldHaveSizeBetween.shouldHaveSizeBetween;
 import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
@@ -24,6 +27,17 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
     protected AbstractMultimapAssert(ACTUAL actual, Class<?> selfType)
     {
         super(actual, selfType);
+    }
+
+    public SELF containsKeys(KEY... keys)
+    {
+        this.isNotNull();
+        MutableList<KEY> keysNotFound = ArrayAdapter.adapt(keys).reject(this.actual::containsKey);
+        if (keysNotFound.isEmpty())
+        {
+            return this.myself;
+        }
+        throw this.assertionError(shouldContainKeys(this.actual, keysNotFound.toSet()));
     }
 
     public SELF hasSize(int expected)
