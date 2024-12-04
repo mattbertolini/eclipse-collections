@@ -16,7 +16,8 @@ import org.eclipse.collections.assertj.api.multimap.list.ListMultimapAssert;
 
 public interface EclipseCollectionsSoftAssertionsProvider extends SoftAssertionsProvider
 {
-    default <KEY, VALUE> ListMultimapAssert<KEY, VALUE> assertThat(ListMultimap<KEY, VALUE> actual) {
+    default <KEY, VALUE> ListMultimapAssert<KEY, VALUE> assertThat(ListMultimap<KEY, VALUE> actual)
+    {
         return this.proxy(ListMultimapAssert.class, ListMultimap.class, actual);
     }
 }

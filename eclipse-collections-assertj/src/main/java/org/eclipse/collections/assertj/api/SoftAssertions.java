@@ -12,17 +12,18 @@ package org.eclipse.collections.assertj.api;
 
 import java.util.function.Consumer;
 
+import org.assertj.core.api.AbstractSoftAssertions;
 import org.assertj.core.api.SoftAssertionsProvider;
 
-public final class SoftAssertions
+public final class SoftAssertions extends AbstractSoftAssertions implements EclipseCollectionsSoftAssertionsProvider
 {
-    private SoftAssertions()
+    public SoftAssertions()
     {
-        throw new UnsupportedOperationException("Utility class");
+        // Do nothing
     }
 
-    public static void assertSoftly(Consumer<EclipseCollectionsSoftAssertionsProvider> softly)
+    public static void assertSoftly(Consumer<SoftAssertions> softly)
     {
-        SoftAssertionsProvider.assertSoftly(EclipseCollectionsSoftAssertionsProvider.class, softly);
+        SoftAssertionsProvider.assertSoftly(SoftAssertions.class, softly);
     }
 }

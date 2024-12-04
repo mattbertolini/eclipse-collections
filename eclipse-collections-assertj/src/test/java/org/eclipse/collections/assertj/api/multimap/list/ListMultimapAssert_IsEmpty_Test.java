@@ -10,13 +10,12 @@
 
 package org.eclipse.collections.assertj.api.multimap.list;
 
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.eclipse.collections.impl.factory.Multimaps;
 import org.eclipse.collections.api.multimap.list.ImmutableListMultimap;
+import org.eclipse.collections.assertj.api.SoftAssertions;
+import org.eclipse.collections.impl.factory.Multimaps;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ListMultimapAssert_IsEmpty_Test
 {
@@ -43,5 +42,12 @@ public class ListMultimapAssert_IsEmpty_Test
         assertThatExceptionOfType(AssertionError.class)
                 .isThrownBy(() -> ListMultimapAssert.assertThat(multimap).isEmpty())
                 .withMessageContaining("Expecting actual not to be null");
+    }
+
+    @Test
+    void softAssertionPasses()
+    {
+        ImmutableListMultimap<String, String> multimap = Multimaps.immutable.list.empty();
+        SoftAssertions.assertSoftly(softly -> softly.assertThat(multimap).isEmpty());
     }
 }
