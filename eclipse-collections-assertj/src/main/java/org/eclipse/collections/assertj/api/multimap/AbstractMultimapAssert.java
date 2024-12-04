@@ -15,6 +15,7 @@ import org.eclipse.collections.api.multimap.Multimap;
 
 import static org.assertj.core.error.ShouldBeEmpty.shouldBeEmpty;
 import static org.assertj.core.error.ShouldHaveSize.shouldHaveSize;
+import static org.assertj.core.error.ShouldHaveSizeBetween.shouldHaveSizeBetween;
 import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
 
 public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert<SELF, ACTUAL, KEY, VALUE>, ACTUAL extends Multimap<KEY, VALUE>, KEY, VALUE>
@@ -34,6 +35,17 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
             return this.myself;
         }
         throw this.assertionError(shouldHaveSize(this.actual, actualSize, expected));
+    }
+
+    public SELF hasSizeBetween(int lowerBoundary, int higherBoundary)
+    {
+        this.isNotNull();
+        int actualSize = this.actual.size();
+        if (actualSize >= lowerBoundary && actualSize <= higherBoundary)
+        {
+            return this.myself;
+        }
+        throw this.assertionError(shouldHaveSizeBetween(this.actual, actualSize, lowerBoundary, higherBoundary));
     }
 
     /**
