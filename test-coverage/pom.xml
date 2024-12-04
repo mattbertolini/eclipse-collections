@@ -52,6 +52,12 @@
 
         <dependency>
             <groupId>org.eclipse.collections</groupId>
+            <artifactId>eclipse-collections-assertj</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.collections</groupId>
             <artifactId>unit-tests</artifactId>
             <scope>test</scope>
             <version>${project.version}</version>

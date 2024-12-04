@@ -17,37 +17,37 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-class ListMultimapAssert_IsNotEmpty_Test
+class ListMultimapAssert_HasSize_Test
 {
     @Test
-    void passesNotEmpty()
+    public void passes()
     {
         ImmutableListMultimap<String, String> multimap = Multimaps.immutable.list.with("Key", "Value");
-        ListMultimapAssert.assertThat(multimap).isNotEmpty();
+        ListMultimapAssert.assertThat(multimap).hasSize(1);
     }
 
     @Test
-    void failsEmpty()
+    public void failsEmpty()
     {
         ImmutableListMultimap<String, String> multimap = Multimaps.immutable.list.empty();
         assertThatExceptionOfType(AssertionError.class)
-                .isThrownBy(() -> ListMultimapAssert.assertThat(multimap).isNotEmpty())
-                .withMessageContaining("Expecting actual not to be empty");
+            .isThrownBy(() -> ListMultimapAssert.assertThat(multimap).hasSize(1))
+            .withMessageContaining("Expected size: 1 but was: 0");
     }
 
     @Test
-    void failsNullMultimap()
+    public void failsNullMultimap()
     {
         ImmutableListMultimap<String, String> multimap = null;
         assertThatExceptionOfType(AssertionError.class)
-                .isThrownBy(() -> ListMultimapAssert.assertThat(multimap).isNotEmpty())
-                .withMessageContaining("Expecting actual not to be null");
+            .isThrownBy(() -> ListMultimapAssert.assertThat(multimap).hasSize(1))
+            .withMessageContaining("Expecting actual not to be null");
     }
 
     @Test
-    void softAssertionPasses()
+    public void softAssertionPasses()
     {
         ImmutableListMultimap<String, String> multimap = Multimaps.immutable.list.with("Key", "Value");
-        SoftAssertions.assertSoftly(softly -> softly.assertThat(multimap).isNotEmpty());
+        SoftAssertions.assertSoftly(softly -> softly.assertThat(multimap).hasSize(1));
     }
 }

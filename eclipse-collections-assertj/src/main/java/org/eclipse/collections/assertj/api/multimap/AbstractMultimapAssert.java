@@ -14,6 +14,7 @@ import org.assertj.core.api.AbstractObjectAssert;
 import org.eclipse.collections.api.multimap.Multimap;
 
 import static org.assertj.core.error.ShouldBeEmpty.shouldBeEmpty;
+import static org.assertj.core.error.ShouldHaveSize.shouldHaveSize;
 import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
 
 public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert<SELF, ACTUAL, KEY, VALUE>,
@@ -25,6 +26,17 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
     protected AbstractMultimapAssert(ACTUAL actual, Class<?> selfType)
     {
         super(actual, selfType);
+    }
+
+    public SELF hasSize(int expected)
+    {
+        this.isNotNull();
+        int actualSize = this.actual.size();
+        if (actualSize == expected)
+        {
+            return this.myself;
+        }
+        throw this.assertionError(shouldHaveSize(this.actual, actualSize, expected));
     }
 
     public void isEmpty()

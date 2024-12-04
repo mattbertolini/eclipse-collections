@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public class ListMultimapAssert_IsEmpty_Test
+class ListMultimapAssert_IsEmpty_Test
 {
     @Test
     public void passes()
@@ -27,7 +27,7 @@ public class ListMultimapAssert_IsEmpty_Test
     }
 
     @Test
-    public void failsNotEmpty()
+    void failsNotEmpty()
     {
         ImmutableListMultimap<String, String> multimap = Multimaps.immutable.list.with("Key", "Value");
         assertThatExceptionOfType(AssertionError.class)
