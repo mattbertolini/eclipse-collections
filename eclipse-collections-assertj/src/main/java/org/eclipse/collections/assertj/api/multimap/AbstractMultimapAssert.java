@@ -17,10 +17,7 @@ import static org.assertj.core.error.ShouldBeEmpty.shouldBeEmpty;
 import static org.assertj.core.error.ShouldHaveSize.shouldHaveSize;
 import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
 
-public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert<SELF, ACTUAL, KEY, VALUE>,
-        ACTUAL extends Multimap<KEY, VALUE>,
-        KEY,
-        VALUE>
+public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert<SELF, ACTUAL, KEY, VALUE>, ACTUAL extends Multimap<KEY, VALUE>, KEY, VALUE>
         extends AbstractObjectAssert<SELF, ACTUAL>
 {
     protected AbstractMultimapAssert(ACTUAL actual, Class<?> selfType)
