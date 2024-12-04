@@ -10,13 +10,18 @@
 
 package org.eclipse.collections.assertj.api.multimap;
 
+import java.util.Map;
+
 import org.assertj.core.api.AbstractObjectAssert;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.multimap.Multimap;
+import org.eclipse.collections.api.tuple.Pair;
 import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
+import org.eclipse.collections.impl.tuple.Tuples;
 
 import static org.assertj.core.error.ShouldBeEmpty.shouldBeEmpty;
 import static org.assertj.core.error.ShouldBeNullOrEmpty.shouldBeNullOrEmpty;
+import static org.assertj.core.error.ShouldContain.shouldContain;
 import static org.assertj.core.error.ShouldContainKeys.shouldContainKeys;
 import static org.assertj.core.error.ShouldHaveSize.shouldHaveSize;
 import static org.assertj.core.error.ShouldHaveSizeBetween.shouldHaveSizeBetween;
@@ -42,6 +47,35 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
         throw this.assertionError(shouldContainKeys(this.actual, keysNotFound.toSet()));
     }
 
+    @SafeVarargs
+    public final SELF contains(Pair<KEY, VALUE>... entries)
+    {
+        return this.containsForProxy(entries);
+    }
+
+    @SafeVarargs
+    public final SELF contains(Map.Entry<KEY, VALUE>... entries)
+    {
+        @SuppressWarnings("unchecked")
+        Pair<KEY, VALUE>[] pairs = ArrayAdapter.adapt(entries)
+                .collect(Tuples::pairFrom)
+                .toArray(Pair[]::new);
+        return this.containsForProxy(pairs);
+    }
+
+    protected SELF containsForProxy(Pair<KEY, VALUE>[] entries)
+    {
+        this.isNotNull();
+        MutableList<Pair<KEY, VALUE>> entriesNotFound = ArrayAdapter
+                .adapt(entries)
+                .reject(entry -> this.actual.containsKeyAndValue(entry.getOne(), entry.getTwo()));
+        if (entriesNotFound.isEmpty())
+        {
+            return this.myself;
+        }
+        throw this.assertionError(shouldContain(this.actual, entries, entriesNotFound));
+    }
+
     public SELF hasSize(int expected)
     {
         this.isNotNull();
@@ -64,10 +98,12 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
         throw this.assertionError(shouldHaveSizeBetween(this.actual, actualSize, lowerBoundary, higherBoundary));
     }
 
-    public SELF hasSizeGreaterThan(int expected) {
+    public SELF hasSizeGreaterThan(int expected)
+    {
         this.isNotNull();
         int actualSize = this.actual.size();
-        if (actualSize > expected) {
+        if (actualSize > expected)
+        {
             return this.myself;
         }
         throw this.assertionError(shouldHaveSizeGreaterThan(this.actual, actualSize, expected));
