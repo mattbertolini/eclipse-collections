@@ -16,6 +16,7 @@ import org.eclipse.collections.api.multimap.Multimap;
 import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
 
 import static org.assertj.core.error.ShouldBeEmpty.shouldBeEmpty;
+import static org.assertj.core.error.ShouldBeNullOrEmpty.shouldBeNullOrEmpty;
 import static org.assertj.core.error.ShouldContainKeys.shouldContainKeys;
 import static org.assertj.core.error.ShouldHaveSize.shouldHaveSize;
 import static org.assertj.core.error.ShouldHaveSizeBetween.shouldHaveSizeBetween;
@@ -94,5 +95,14 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
             return this.myself;
         }
         throw this.assertionError(shouldNotBeEmpty());
+    }
+
+    public void isNullOrEmpty()
+    {
+        if (this.actual == null || this.actual.isEmpty())
+        {
+            return;
+        }
+        throw this.assertionError(shouldBeNullOrEmpty(this.actual));
     }
 }
