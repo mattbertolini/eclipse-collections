@@ -31,6 +31,7 @@ import static org.assertj.core.error.ShouldHaveSizeGreaterThanOrEqualTo.shouldHa
 import static org.assertj.core.error.ShouldHaveSizeLessThan.shouldHaveSizeLessThan;
 import static org.assertj.core.error.ShouldHaveSizeLessThanOrEqualTo.shouldHaveSizeLessThanOrEqualTo;
 import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
+import static org.assertj.core.error.ShouldNotContainKeys.shouldNotContainKeys;
 
 /**
  * Base class for all implementations of assertions for {@link Multimap}s.
@@ -96,6 +97,25 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
             return this.myself;
         }
         throw this.assertionError(shouldContainValues(this.actual, valuesNotFound.toSet()));
+    }
+
+    public SELF doesNotContainKey(KEY key) {
+        return doesNotContainKeys(key);
+    }
+
+    @SafeVarargs
+    public final SELF doesNotContainKeys(KEY... keys) {
+        return doesNotContainKeysForProxy(keys);
+    }
+
+    @SuppressWarnings("MethodCanBeVariableArityMethod")
+    protected SELF doesNotContainKeysForProxy(KEY[] keys) {
+        this.isNotNull();
+        MutableList<KEY> keysFound = ArrayAdapter.adapt(keys).select(this.actual::containsKey);
+        if (keysFound.isEmpty()) {
+            return this.myself;
+        }
+        throw this.assertionError(shouldNotContainKeys(this.actual, keysFound.toSet()));
     }
 
     /**
