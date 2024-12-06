@@ -11,17 +11,22 @@
 package org.eclipse.collections.assertj.api.multimap;
 
 import java.util.Map;
+import java.util.Objects;
 
 import org.assertj.core.api.AbstractObjectAssert;
+import org.assertj.core.api.Condition;
+import org.assertj.core.error.ShouldContainEntry;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.multimap.Multimap;
 import org.eclipse.collections.api.tuple.Pair;
 import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
 import org.eclipse.collections.impl.tuple.Tuples;
 
+import static java.util.Objects.requireNonNull;
 import static org.assertj.core.error.ShouldBeEmpty.shouldBeEmpty;
 import static org.assertj.core.error.ShouldBeNullOrEmpty.shouldBeNullOrEmpty;
 import static org.assertj.core.error.ShouldContain.shouldContain;
+import static org.assertj.core.error.ShouldContainKey.shouldContainKey;
 import static org.assertj.core.error.ShouldContainKeys.shouldContainKeys;
 import static org.assertj.core.error.ShouldContainValues.shouldContainValues;
 import static org.assertj.core.error.ShouldHaveSize.shouldHaveSize;
@@ -122,6 +127,22 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
             return this.myself;
         }
         throw this.assertionError(shouldNotContainKeys(this.actual, keysFound.toSet()));
+    }
+
+    public SELF hasKeySatisfying(Condition<? super KEY> keyCondition)
+    {
+        this.isNotNull();
+        requireNonNull(keyCondition, "The condition to evaluate should not be null");
+
+        for (KEY key : this.actual.keySet())
+        {
+            if (keyCondition.matches(key))
+            {
+                return this.myself;
+            }
+        }
+
+        throw this.assertionError(shouldContainKey(this.actual, keyCondition));
     }
 
     /**
