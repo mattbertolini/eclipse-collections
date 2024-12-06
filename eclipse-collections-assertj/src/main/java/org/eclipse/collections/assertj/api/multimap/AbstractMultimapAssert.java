@@ -146,10 +146,10 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
      * <p>
      * Example:
      * <pre>{@code
-     * Multimap<String, String> multimap = Multimaps.mutable.list.with("Key", "Value");
+     * Multimap<String, String> multimap = Multimaps.mutable.list.with("Key", "Value1", "Key", "Value2");
      *
      * // assertion will pass
-     * assertThat(multimap).hasSize(1);
+     * assertThat(multimap).hasSize(2);
      *
      * // assertions will fail
      * assertThat(multimap).hasSize(0);
