@@ -186,41 +186,60 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
         throw this.assertionError(shouldHaveSizeBetween(this.actual, actualSize, lowerBoundary, higherBoundary));
     }
 
-    public SELF hasSizeGreaterThan(int expected)
+    public SELF hasSizeGreaterThan(int boundary)
     {
         this.isNotNull();
         int actualSize = this.actual.size();
-        if (actualSize > expected)
+        if (actualSize > boundary)
         {
             return this.myself;
         }
-        throw this.assertionError(shouldHaveSizeGreaterThan(this.actual, actualSize, expected));
+        throw this.assertionError(shouldHaveSizeGreaterThan(this.actual, actualSize, boundary));
     }
 
-    public SELF hasSizeGreaterThanOrEqualTo(int expected)
+    public SELF hasSizeGreaterThanOrEqualTo(int boundary)
     {
         this.isNotNull();
         int actualSize = this.actual.size();
-        if (actualSize >= expected)
+        if (actualSize >= boundary)
         {
             return this.myself;
         }
-        throw this.assertionError(shouldHaveSizeGreaterThanOrEqualTo(this.actual, actualSize, expected));
-    }
-
-    public SELF hasSizeLessThan(int expected)
-    {
-        this.isNotNull();
-        int actualSize = this.actual.size();
-        if (actualSize < expected)
-        {
-            return this.myself;
-        }
-        throw this.assertionError(shouldHaveSizeLessThan(this.actual, actualSize, expected));
+        throw this.assertionError(shouldHaveSizeGreaterThanOrEqualTo(this.actual, actualSize, boundary));
     }
 
     /**
-     * Verifies that the number of values in the {@link Multimap} is less than or equal to the given one.
+     * Verifies that the number of values in the {@link Multimap} is less than the boundary.
+     * <p>
+     * Example:
+     * <pre>{@code
+     * Multimap<String, String> multimap = Multimaps.mutable.list.with("Key1", "Value1", "Key2", "Value2");
+     *
+     * // assertion will pass
+     * assertThat(multimap).hasSizeLessThan(3);
+     *
+     * // assertions will fail
+     * assertThat(multimap).hasSizeLessThan(1);
+     * assertThat(multimap).hasSizeLessThan(2);
+     * }</pre>
+     *
+     * @param boundary the maximum size (exclusive) the {@link Multimap} should have.
+     * @return {@code this} assertion object.
+     * @throws AssertionError if the actual size of the {@link Multimap} is not less than the expected size.
+     */
+    public SELF hasSizeLessThan(int boundary)
+    {
+        this.isNotNull();
+        int actualSize = this.actual.size();
+        if (actualSize < boundary)
+        {
+            return this.myself;
+        }
+        throw this.assertionError(shouldHaveSizeLessThan(this.actual, actualSize, boundary));
+    }
+
+    /**
+     * Verifies that the number of values in the {@link Multimap} is less than or equal to the boundary.
      * <p>
      * Example:
      * <pre>{@code
@@ -235,19 +254,19 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
      * assertThat(multimap).hasSizeLessThanOrEqualTo(1);
      * }</pre>
      *
-     * @param expected the maximum expected size of the {@link Multimap}.
+     * @param boundary the maximum expected size of the {@link Multimap}.
      * @return {@code this} assertion object.
      * @throws AssertionError if the actual size of the {@link Multimap} is greater than the expected size.
      */
-    public SELF hasSizeLessThanOrEqualTo(int expected)
+    public SELF hasSizeLessThanOrEqualTo(int boundary)
     {
         this.isNotNull();
         int actualSize = this.actual.size();
-        if (actualSize <= expected)
+        if (actualSize <= boundary)
         {
             return this.myself;
         }
-        throw this.assertionError(shouldHaveSizeLessThanOrEqualTo(this.actual, actualSize, expected));
+        throw this.assertionError(shouldHaveSizeLessThanOrEqualTo(this.actual, actualSize, boundary));
     }
 
     /**
