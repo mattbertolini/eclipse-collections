@@ -130,12 +130,9 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
         this.isNotNull();
         requireNonNull(keyCondition, "The condition to evaluate should not be null");
 
-        for (KEY key : this.actual.keySet())
+        if (this.actual.keysView().anySatisfy(keyCondition::matches))
         {
-            if (keyCondition.matches(key))
-            {
-                return this.myself;
-            }
+            return this.myself;
         }
 
         throw this.assertionError(shouldContainKey(this.actual, keyCondition));
