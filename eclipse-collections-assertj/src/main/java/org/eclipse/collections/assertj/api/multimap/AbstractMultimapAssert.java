@@ -17,7 +17,6 @@ import org.assertj.core.api.Condition;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.multimap.Multimap;
 import org.eclipse.collections.api.tuple.Pair;
-import org.eclipse.collections.assertj.error.ShouldHaveDistinctSize;
 import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
 import org.eclipse.collections.impl.tuple.Tuples;
 
@@ -37,6 +36,7 @@ import static org.assertj.core.error.ShouldHaveSizeLessThanOrEqualTo.shouldHaveS
 import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
 import static org.assertj.core.error.ShouldNotContainKeys.shouldNotContainKeys;
 import static org.eclipse.collections.assertj.error.ShouldHaveDistinctSize.shouldHaveDistinctSize;
+import static org.eclipse.collections.assertj.error.ShouldHaveDistinctSizeGreaterThan.shouldHaveDistinctSizeGreaterThan;
 
 /**
  * Base class for all implementations of assertions for {@link Multimap}s.
@@ -137,6 +137,17 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
             return this.myself;
         }
         throw this.assertionError(shouldHaveDistinctSize(this.actual, actualSize, expected));
+    }
+
+    public SELF hasDistinctSizeGreaterThan(int boundary)
+    {
+        this.isNotNull();
+        int actualSize = this.actual.sizeDistinct();
+        if (actualSize > boundary)
+        {
+            return this.myself;
+        }
+        throw this.assertionError(shouldHaveDistinctSizeGreaterThan(this.actual, actualSize, boundary));
     }
 
     public SELF hasKeySatisfying(Condition<? super KEY> keyCondition)
