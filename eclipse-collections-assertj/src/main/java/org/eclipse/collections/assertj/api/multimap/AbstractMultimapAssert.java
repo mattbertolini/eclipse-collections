@@ -26,6 +26,7 @@ import static org.assertj.core.error.ShouldBeNullOrEmpty.shouldBeNullOrEmpty;
 import static org.assertj.core.error.ShouldContain.shouldContain;
 import static org.assertj.core.error.ShouldContainKey.shouldContainKey;
 import static org.assertj.core.error.ShouldContainKeys.shouldContainKeys;
+import static org.assertj.core.error.ShouldContainValue.shouldContainValue;
 import static org.assertj.core.error.ShouldContainValues.shouldContainValues;
 import static org.assertj.core.error.ShouldHaveSize.shouldHaveSize;
 import static org.assertj.core.error.ShouldHaveSizeBetween.shouldHaveSizeBetween;
@@ -306,6 +307,18 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
             return this.myself;
         }
         throw this.assertionError(shouldHaveSizeLessThanOrEqualTo(this.actual, actualSize, boundary));
+    }
+
+    public SELF hasValueSatisfying(Condition<? super VALUE> valueCondition)
+    {
+        this.isNotNull();
+        requireNonNull(valueCondition, "The condition to evaluate should not be null");
+
+        if (this.actual.valuesView().anySatisfy(valueCondition::matches))
+        {
+            return this.myself;
+        }
+        throw this.assertionError(shouldContainValue(this.actual, valueCondition));
     }
 
     /**
