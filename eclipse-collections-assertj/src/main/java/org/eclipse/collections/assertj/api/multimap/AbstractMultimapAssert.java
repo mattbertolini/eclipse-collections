@@ -11,11 +11,9 @@
 package org.eclipse.collections.assertj.api.multimap;
 
 import java.util.Map;
-import java.util.Objects;
 
 import org.assertj.core.api.AbstractObjectAssert;
 import org.assertj.core.api.Condition;
-import org.assertj.core.error.ShouldContainEntry;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.multimap.Multimap;
 import org.eclipse.collections.api.tuple.Pair;
