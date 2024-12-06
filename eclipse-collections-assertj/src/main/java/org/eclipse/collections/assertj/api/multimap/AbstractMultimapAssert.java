@@ -36,10 +36,10 @@ import static org.assertj.core.error.ShouldNotContainKeys.shouldNotContainKeys;
 /**
  * Base class for all implementations of assertions for {@link Multimap}s.
  *
- * @param <SELF> the "self" type of this assertion class.
+ * @param <SELF>   the "self" type of this assertion class.
  * @param <ACTUAL> the type of the "actual" value.
- * @param <KEY> the type of keys in the Multimap.
- * @param <VALUE> the type of values in the Multimap.
+ * @param <KEY>    the type of keys in the Multimap.
+ * @param <VALUE>  the type of values in the Multimap.
  */
 public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert<SELF, ACTUAL, KEY, VALUE>, ACTUAL extends Multimap<KEY, VALUE>, KEY, VALUE>
         extends AbstractObjectAssert<SELF, ACTUAL>
@@ -90,29 +90,35 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
         throw this.assertionError(shouldContain(this.actual, entries, entriesNotFound));
     }
 
-    public SELF containsValues(VALUE... values) {
+    public SELF containsValues(VALUE... values)
+    {
         this.isNotNull();
         MutableList<VALUE> valuesNotFound = ArrayAdapter.adapt(values).reject(this.actual::containsValue);
-        if (valuesNotFound.isEmpty()) {
+        if (valuesNotFound.isEmpty())
+        {
             return this.myself;
         }
         throw this.assertionError(shouldContainValues(this.actual, valuesNotFound.toSet()));
     }
 
-    public SELF doesNotContainKey(KEY key) {
-        return doesNotContainKeys(key);
+    public SELF doesNotContainKey(KEY key)
+    {
+        return this.doesNotContainKeys(key);
     }
 
     @SafeVarargs
-    public final SELF doesNotContainKeys(KEY... keys) {
-        return doesNotContainKeysForProxy(keys);
+    public final SELF doesNotContainKeys(KEY... keys)
+    {
+        return this.doesNotContainKeysForProxy(keys);
     }
 
     @SuppressWarnings("MethodCanBeVariableArityMethod")
-    protected SELF doesNotContainKeysForProxy(KEY[] keys) {
+    protected SELF doesNotContainKeysForProxy(KEY[] keys)
+    {
         this.isNotNull();
         MutableList<KEY> keysFound = ArrayAdapter.adapt(keys).select(this.actual::containsKey);
-        if (keysFound.isEmpty()) {
+        if (keysFound.isEmpty())
+        {
             return this.myself;
         }
         throw this.assertionError(shouldNotContainKeys(this.actual, keysFound.toSet()));
@@ -170,10 +176,12 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
         throw this.assertionError(shouldHaveSizeGreaterThan(this.actual, actualSize, expected));
     }
 
-    public SELF hasSizeGreaterThanOrEqualTo(int expected) {
+    public SELF hasSizeGreaterThanOrEqualTo(int expected)
+    {
         this.isNotNull();
         int actualSize = this.actual.size();
-        if (actualSize >= expected) {
+        if (actualSize >= expected)
+        {
             return this.myself;
         }
         throw this.assertionError(shouldHaveSizeGreaterThanOrEqualTo(this.actual, actualSize, expected));
@@ -210,10 +218,12 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
      * @return {@code this} assertion object.
      * @throws AssertionError if the actual size of the {@link Multimap} is greater than the expected size.
      */
-    public SELF hasSizeLessThanOrEqualTo(int expected) {
+    public SELF hasSizeLessThanOrEqualTo(int expected)
+    {
         this.isNotNull();
         int actualSize = this.actual.size();
-        if (actualSize <= expected) {
+        if (actualSize <= expected)
+        {
             return this.myself;
         }
         throw this.assertionError(shouldHaveSizeLessThanOrEqualTo(this.actual, actualSize, expected));
