@@ -17,6 +17,7 @@ import org.assertj.core.api.Condition;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.multimap.Multimap;
 import org.eclipse.collections.api.tuple.Pair;
+import org.eclipse.collections.assertj.error.ShouldHaveDistinctSize;
 import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
 import org.eclipse.collections.impl.tuple.Tuples;
 
@@ -35,6 +36,7 @@ import static org.assertj.core.error.ShouldHaveSizeLessThan.shouldHaveSizeLessTh
 import static org.assertj.core.error.ShouldHaveSizeLessThanOrEqualTo.shouldHaveSizeLessThanOrEqualTo;
 import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
 import static org.assertj.core.error.ShouldNotContainKeys.shouldNotContainKeys;
+import static org.eclipse.collections.assertj.error.ShouldHaveDistinctSize.shouldHaveDistinctSize;
 
 /**
  * Base class for all implementations of assertions for {@link Multimap}s.
@@ -44,6 +46,7 @@ import static org.assertj.core.error.ShouldNotContainKeys.shouldNotContainKeys;
  * @param <KEY>    the type of keys in the Multimap.
  * @param <VALUE>  the type of values in the Multimap.
  */
+@SuppressWarnings("NonBooleanMethodNameMayNotStartWithQuestion")
 public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert<SELF, ACTUAL, KEY, VALUE>, ACTUAL extends Multimap<KEY, VALUE>, KEY, VALUE>
         extends AbstractObjectAssert<SELF, ACTUAL>
 {
@@ -123,6 +126,17 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
             return this.myself;
         }
         throw this.assertionError(shouldNotContainKeys(this.actual, keysFound.toSet()));
+    }
+
+    public SELF hasDistinctSize(int expected)
+    {
+        this.isNotNull();
+        int actualSize = this.actual.sizeDistinct();
+        if (actualSize == expected)
+        {
+            return this.myself;
+        }
+        throw this.assertionError(shouldHaveDistinctSize(this.actual, actualSize, expected));
     }
 
     public SELF hasKeySatisfying(Condition<? super KEY> keyCondition)
