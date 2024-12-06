@@ -20,14 +20,29 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 class ListMultimapAssert_HasSize_Test
 {
     @Test
-    public void passes()
+    void passes()
     {
         ImmutableListMultimap<String, String> multimap = Multimaps.immutable.list.with("Key", "Value");
         ListMultimapAssert.assertThat(multimap).hasSize(1);
     }
 
     @Test
-    public void failsEmpty()
+    void passesSameKeyMultipleValues()
+    {
+        ImmutableListMultimap<String, String> multimap = Multimaps.immutable.list.with("Key", "Value1", "Key", "Value2");
+        ListMultimapAssert.assertThat(multimap).hasSize(2);
+    }
+
+    @Test
+    void passesMultipleKeys()
+    {
+        ImmutableListMultimap<String, String> multimap =
+                Multimaps.immutable.list.with("Key1", "Value1", "Key2", "Value2");
+        ListMultimapAssert.assertThat(multimap).hasSize(2);
+    }
+
+    @Test
+    void failsEmpty()
     {
         ImmutableListMultimap<String, String> multimap = Multimaps.immutable.list.empty();
         assertThatExceptionOfType(AssertionError.class)
@@ -36,7 +51,7 @@ class ListMultimapAssert_HasSize_Test
     }
 
     @Test
-    public void failsNullMultimap()
+    void failsNullMultimap()
     {
         ImmutableListMultimap<String, String> multimap = null;
         assertThatExceptionOfType(AssertionError.class)
@@ -45,7 +60,7 @@ class ListMultimapAssert_HasSize_Test
     }
 
     @Test
-    public void softAssertionPasses()
+    void softAssertionPasses()
     {
         ImmutableListMultimap<String, String> multimap = Multimaps.immutable.list.with("Key", "Value");
         SoftAssertions.assertSoftly(softly -> softly.assertThat(multimap).hasSize(1));

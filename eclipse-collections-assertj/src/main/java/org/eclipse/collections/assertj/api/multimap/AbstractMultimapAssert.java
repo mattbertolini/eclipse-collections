@@ -73,9 +73,7 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
     public final SELF contains(Map.Entry<KEY, VALUE>... entries)
     {
         @SuppressWarnings("unchecked")
-        Pair<KEY, VALUE>[] pairs = ArrayAdapter.adapt(entries)
-                .collect(Tuples::pairFrom)
-                .toArray(Pair[]::new);
+        Pair<KEY, VALUE>[] pairs = ArrayAdapter.adapt(entries).collect(Tuples::pairFrom).toArray(Pair[]::new);
         return this.containsForProxy(pairs);
     }
 
@@ -144,7 +142,7 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
     }
 
     /**
-     * Verifies that the number of values in the {@link Multimap} is equal to the given one.
+     * Verifies that the number of key-value entry pairs in the {@link Multimap} is equal to the given one.
      * <p>
      * Example:
      * <pre>{@code
@@ -196,7 +194,8 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
     }
 
     /**
-     * Verifies that the number of values in the {@link Multimap} is greater than or equal to the boundary.
+     * Verifies that the number of key-value entry pairs in the {@link Multimap} is greater than or equal to the
+     * boundary.
      * <p>
      * Example:
      * <pre>{@code
@@ -227,7 +226,7 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
     }
 
     /**
-     * Verifies that the number of values in the {@link Multimap} is less than the boundary.
+     * Verifies that the number of key-value entry pairs in the {@link Multimap} is less than the boundary.
      * <p>
      * Example:
      * <pre>{@code
@@ -257,7 +256,7 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
     }
 
     /**
-     * Verifies that the number of values in the {@link Multimap} is less than or equal to the boundary.
+     * Verifies that the number of key-value entry pairs in the {@link Multimap} is less than or equal to the boundary.
      * <p>
      * Example:
      * <pre>{@code
