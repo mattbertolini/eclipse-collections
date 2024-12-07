@@ -47,7 +47,6 @@ import static org.eclipse.collections.assertj.error.ShouldHaveDistinctSizeGreate
  * @param <KEY>    the type of keys in the Multimap.
  * @param <VALUE>  the type of values in the Multimap.
  */
-@SuppressWarnings("NonBooleanMethodNameMayNotStartWithQuestion")
 public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert<SELF, ACTUAL, KEY, VALUE>, ACTUAL extends Multimap<KEY, VALUE>, KEY, VALUE>
         extends AbstractObjectAssert<SELF, ACTUAL>
 {
@@ -135,6 +134,9 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
         return this.doesNotContainKeysForProxy(keys);
     }
 
+    // This method is protected in order to be proxied for SoftAssertions / Assumptions.
+    // The public method for it (the one not ending with "ForProxy") is marked as final and annotated with @SafeVarargs
+    // in order to avoid compiler warning in user code
     @SuppressWarnings("MethodCanBeVariableArityMethod")
     protected SELF doesNotContainKeysForProxy(KEY[] keys)
     {
@@ -212,6 +214,27 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
         throw this.assertionError(shouldHaveSize(this.actual, actualSize, expected));
     }
 
+    /**
+     * Verifies that the number of key-value entry pairs in the {@link Multimap} is between the given boundaries
+     * (inclusive).
+     * <p>
+     * Example:
+     * <pre>{@code
+     * Multimap<String, String> multimap = Multimaps.mutable.list.with("Key1", "Value1", "Key1", "Value2", "Key2", "Value3");
+     *
+     * // assertion will pass
+     * assertThat(multimap).hasSizeBetween(1, 4)
+     *                     .hasSizeBetween(2, 3);
+     *
+     * // assertions will fail
+     * assertThat(multimap).hasSizeBetween(4, 5);
+     * }</pre>
+     *
+     * @param lowerBoundary  the lower boundary compared to which actual size should be greater than or equal to.
+     * @param higherBoundary the higher boundary compared to which actual size should be less than or equal to.
+     * @return {@code this} assertion object.
+     * @throws AssertionError if the actual size of the {@link Multimap} is not between the given boundaries.
+     */
     public SELF hasSizeBetween(int lowerBoundary, int higherBoundary)
     {
         this.isNotNull();

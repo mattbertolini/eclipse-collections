@@ -10,9 +10,11 @@
 
 package org.eclipse.collections.assertj.api;
 
+import org.assertj.core.util.CheckReturnValue;
 import org.eclipse.collections.api.multimap.list.ListMultimap;
 import org.eclipse.collections.assertj.api.multimap.list.ListMultimapAssert;
 
+@CheckReturnValue
 public final class Assertions
 {
     private Assertions()
