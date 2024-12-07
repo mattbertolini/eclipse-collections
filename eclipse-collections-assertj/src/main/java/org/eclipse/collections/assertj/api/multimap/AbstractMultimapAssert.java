@@ -38,6 +38,7 @@ import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
 import static org.assertj.core.error.ShouldNotContainKeys.shouldNotContainKeys;
 import static org.eclipse.collections.assertj.error.ShouldHaveDistinctSize.shouldHaveDistinctSize;
 import static org.eclipse.collections.assertj.error.ShouldHaveDistinctSizeGreaterThan.shouldHaveDistinctSizeGreaterThan;
+import static org.eclipse.collections.assertj.error.ShouldHaveDistinctSizeGreaterThanOrEqualTo.shouldHaveDistinctSizeGreaterThanOrEqualTo;
 
 /**
  * Base class for all implementations of assertions for {@link Multimap}s.
@@ -169,6 +170,17 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
             return this.myself;
         }
         throw this.assertionError(shouldHaveDistinctSizeGreaterThan(this.actual, actualSize, boundary));
+    }
+
+    public SELF hasDistinctSizeGreaterThanOrEqualTo(int boundary)
+    {
+        this.isNotNull();
+        int actualSize = this.actual.sizeDistinct();
+        if (actualSize >= boundary)
+        {
+            return this.myself;
+        }
+        throw this.assertionError(shouldHaveDistinctSizeGreaterThanOrEqualTo(this.actual, actualSize, boundary));
     }
 
     public SELF hasKeySatisfying(Condition<? super KEY> keyCondition)
