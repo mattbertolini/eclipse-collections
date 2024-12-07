@@ -35,6 +35,7 @@ import static org.assertj.core.error.ShouldHaveSizeGreaterThanOrEqualTo.shouldHa
 import static org.assertj.core.error.ShouldHaveSizeLessThan.shouldHaveSizeLessThan;
 import static org.assertj.core.error.ShouldHaveSizeLessThanOrEqualTo.shouldHaveSizeLessThanOrEqualTo;
 import static org.assertj.core.error.ShouldNotBeEmpty.shouldNotBeEmpty;
+import static org.assertj.core.error.ShouldNotContain.shouldNotContain;
 import static org.assertj.core.error.ShouldNotContainKeys.shouldNotContainKeys;
 import static org.eclipse.collections.assertj.error.ShouldHaveDistinctSize.shouldHaveDistinctSize;
 import static org.eclipse.collections.assertj.error.ShouldHaveDistinctSizeGreaterThan.shouldHaveDistinctSizeGreaterThan;
@@ -122,6 +123,33 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
             return this.myself;
         }
         throw this.assertionError(shouldContainValues(this.actual, valuesNotFound.toSet()));
+    }
+
+    @SafeVarargs
+    public final SELF doesNotContain(Pair<? extends KEY, ? extends VALUE>... entries)
+    {
+        return this.doesNotContainForProxy(entries);
+    }
+
+    @SafeVarargs
+    public final SELF doesNotContain(Map.Entry<? extends KEY, ? extends VALUE>... entries)
+    {
+        @SuppressWarnings("unchecked")
+        Pair<KEY, VALUE>[] pairs = ArrayAdapter.adapt(entries).collect(Tuples::pairFrom).toArray(Pair[]::new);
+        return this.doesNotContainForProxy(pairs);
+    }
+
+    protected SELF doesNotContainForProxy(Pair<? extends KEY, ? extends VALUE>[] entries)
+    {
+        this.isNotNull();
+        MutableList<Pair<? extends KEY, ? extends VALUE>> entriesFound = ArrayAdapter
+                .adapt(entries)
+                .select(entry -> this.actual.containsKeyAndValue(entry.getOne(), entry.getTwo()));
+        if (entriesFound.isEmpty())
+        {
+            return this.myself;
+        }
+        throw this.assertionError(shouldNotContain(this.actual, entries, entriesFound));
     }
 
     public SELF doesNotContainKey(KEY key)
