@@ -56,6 +56,24 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
         super(actual, selfType);
     }
 
+    /**
+     * Verifies that the actual {@link Multimap} contains the given keys.
+     * <p>
+     * Example:
+     * <pre>{@code
+     * Multimap<String, String> multimap = Multimaps.mutable.list.with("Key1", "Value1", "Key2", "Value2");
+     *
+     * // assertion will pass
+     * assertThat(multimap).containsKeys("Key1", "Key2");
+     *
+     * // assertion will fail
+     * assertThat(multimap).containsKeys("Key3");
+     * }</pre>
+     *
+     * @param keys the keys that are expected to be present in the {@link Multimap}.
+     * @return this assertion object.
+     * @throws AssertionError if the actual {@link Multimap} does not contain the given keys.
+     */
     public SELF containsKeys(KEY... keys)
     {
         this.isNotNull();
@@ -205,6 +223,25 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
         throw this.assertionError(shouldHaveSizeBetween(this.actual, actualSize, lowerBoundary, higherBoundary));
     }
 
+    /**
+     * Verifies that the number of key-value entry pairs in the {@link Multimap} is greater than the specified boundary.
+     * <p>
+     * Example:
+     * <pre>{@code
+     * Multimap<String, String> multimap = Multimaps.mutable.list.with("Key1", "Value1", "Key1", "Value2", "Key2", "Value3");
+     *
+     * // assertion will pass
+     * assertThat(multimap).hasSizeGreaterThan(1);
+     *
+     * // assertions will fail
+     * assertThat(multimap).hasSizeGreaterThan(3);
+     * assertThat(multimap).hasSizeGreaterThan(4);
+     * }</pre>
+     *
+     * @param boundary the size that the actual number of key-value pairs should exceed.
+     * @return {@code this} assertion object.
+     * @throws AssertionError if the actual size of the {@link Multimap} is not greater than the specified boundary.
+     */
     public SELF hasSizeGreaterThan(int boundary)
     {
         this.isNotNull();
