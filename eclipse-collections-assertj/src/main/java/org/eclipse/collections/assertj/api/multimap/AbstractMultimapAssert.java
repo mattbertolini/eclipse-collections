@@ -17,8 +17,6 @@ import org.assertj.core.api.Condition;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.multimap.Multimap;
 import org.eclipse.collections.api.tuple.Pair;
-import org.eclipse.collections.assertj.error.ShouldHaveDistinctSizeLessThan;
-import org.eclipse.collections.assertj.error.ShouldHaveDistinctSizeLessThanOrEqualTo;
 import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
 import org.eclipse.collections.impl.tuple.Tuples;
 
@@ -116,6 +114,10 @@ public abstract class AbstractMultimapAssert<SELF extends AbstractMultimapAssert
             return this.myself;
         }
         throw this.assertionError(shouldContain(this.actual, entries, entriesNotFound));
+    }
+
+    public SELF containsEntry(KEY key, VALUE value) {
+        return this.contains(Tuples.pair(key, value));
     }
 
     public SELF containsValues(VALUE... values)
