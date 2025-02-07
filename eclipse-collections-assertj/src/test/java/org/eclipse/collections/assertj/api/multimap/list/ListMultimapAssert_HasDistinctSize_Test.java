@@ -10,45 +10,48 @@
 
 package org.eclipse.collections.assertj.api.multimap.list;
 
-import org.eclipse.collections.api.multimap.list.ImmutableListMultimap;
+import org.eclipse.collections.api.factory.Lists;
+import org.eclipse.collections.api.multimap.list.ListMultimap;
+import org.eclipse.collections.api.multimap.list.MutableListMultimap;
 import org.eclipse.collections.assertj.api.SoftAssertions;
+import org.eclipse.collections.assertj.api.multimap.AbstractMultimapAssert_HasDistinctSize_Contract;
 import org.eclipse.collections.impl.factory.Multimaps;
-import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-
-class ListMultimapAssert_HasDistinctSize_Test
+class ListMultimapAssert_HasDistinctSize_Test implements AbstractMultimapAssert_HasDistinctSize_Contract<ListMultimap<String, String>, ListMultimapAssert<String, String>>
 {
-    @Test
-    void passes()
+    @Override
+    public ListMultimap<String, String> testInput()
     {
-        ImmutableListMultimap<String, String> multimap =
-                Multimaps.immutable.list.with("Key1", "Value1", "Key2", "Value2", "Key1", "Value3");
-        ListMultimapAssert.assertThat(multimap).hasDistinctSize(2);
+        MutableListMultimap<String, String> multimap = Multimaps.mutable.list.of();
+        multimap.putAll("TOS", Lists.immutable.of("Kirk", "Spock", "McCoy", "Scotty", "Uhura", "Sulu", "Chekov"));
+        multimap.putAll("TNG", Lists.immutable.of("Picard", "Riker", "Data", "Geordi", "Troi", "Crusher", "Worf"));
+        multimap.putAll("DS9", Lists.immutable.of("Sisko", "Kira", "Obrien", "Dax", "Odo", "Bashir", "Worf", "Quark", "Jake"));
+        multimap.putAll("VOY", Lists.immutable.of("Janeway", "Chakotay", "Torres", "Paris", "The Doctor", "Tuvok", "Kim", "Seven"));
+        multimap.putAll("ENT", Lists.immutable.of("Archer", "Trip", "Tpol", "Reed", "Hoshi", "Phlox", "Mayweather"));
+        return multimap;
     }
 
-    @Test
-    void failsEmpty()
+    @Override
+    public ListMultimap<String, String> emptyInput()
     {
-        ImmutableListMultimap<String, String> multimap = Multimaps.immutable.list.empty();
-        assertThatExceptionOfType(AssertionError.class)
-                .isThrownBy(() -> ListMultimapAssert.assertThat(multimap).hasDistinctSize(1))
-                .withMessageContaining("Expected distinct size: 1 but was: 0");
+        return Multimaps.immutable.list.empty();
     }
 
-    @Test
-    void failsNullMultimap()
+    @Override
+    public ListMultimapAssert<String, String> assertion(ListMultimap<String, String> testData)
     {
-        ImmutableListMultimap<String, String> multimap = null;
-        assertThatExceptionOfType(AssertionError.class)
-                .isThrownBy(() -> ListMultimapAssert.assertThat(multimap).hasDistinctSize(1))
-                .withMessageContaining("Expecting actual not to be null");
+        return ListMultimapAssert.assertThat(testData);
     }
 
-    @Test
-    void softAssertionPasses()
+    @Override
+    public ListMultimapAssert<String, String> softAssertion(SoftAssertions softAssertions, ListMultimap<String, String> testData)
     {
-        ImmutableListMultimap<String, String> multimap = Multimaps.immutable.list.with("Key", "Value");
-        SoftAssertions.assertSoftly(softly -> softly.assertThat(multimap).hasDistinctSize(1));
+        return softAssertions.assertThat(testData);
+    }
+
+    @Override
+    public int expectedSize()
+    {
+        return 5;
     }
 }
