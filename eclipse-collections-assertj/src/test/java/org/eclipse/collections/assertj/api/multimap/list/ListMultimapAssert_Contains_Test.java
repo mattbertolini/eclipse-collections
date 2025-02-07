@@ -12,108 +12,70 @@ package org.eclipse.collections.assertj.api.multimap.list;
 
 import java.util.Map;
 
+import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.multimap.list.ListMultimap;
+import org.eclipse.collections.api.multimap.list.MutableListMultimap;
+import org.eclipse.collections.api.tuple.Pair;
 import org.eclipse.collections.assertj.api.SoftAssertions;
+import org.eclipse.collections.assertj.api.multimap.AbstractMultimapAssert_Contains_Contract;
 import org.eclipse.collections.impl.factory.Multimaps;
-import org.junit.jupiter.api.Test;
 
 import static java.util.Map.entry;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.eclipse.collections.impl.tuple.Tuples.pair;
 
-public class ListMultimapAssert_Contains_Test
+public class ListMultimapAssert_Contains_Test implements AbstractMultimapAssert_Contains_Contract<ListMultimap<String, String>, ListMultimapAssert<String, String>>
 {
-    @Test
-    public void containsPairsPasses()
+    @Override
+    public ListMultimap<String, String> testInput()
     {
-        ListMultimap<String, String> multimap = Multimaps.mutable.list.with(
-                "key1", "value1",
-                "key2", "value2"
-        );
-
-        ListMultimapAssert.assertThat(multimap).contains(pair("key1", "value1"), pair("key2", "value2"));
+        MutableListMultimap<String, String> multimap = Multimaps.mutable.list.of();
+        multimap.putAll("TOS", Lists.immutable.of("Kirk", "Spock", "McCoy", "Scotty", "Uhura", "Sulu", "Chekov"));
+        multimap.putAll("TNG", Lists.immutable.of("Picard", "Riker", "Data", "Geordi", "Troi", "Crusher", "Worf"));
+        multimap.putAll("DS9", Lists.immutable.of("Sisko", "Kira", "Obrien", "Dax", "Odo", "Bashir", "Worf", "Quark", "Jake"));
+        multimap.putAll("VOY", Lists.immutable.of("Janeway", "Chakotay", "Torres", "Paris", "The Doctor", "Tuvok", "Kim", "Seven"));
+        multimap.putAll("ENT", Lists.immutable.of("Archer", "Trip", "Tpol", "Reed", "Hoshi", "Phlox", "Mayweather"));
+        return multimap;
     }
 
-    @Test
-    void containsPairsFails()
+    @Override
+    public ListMultimap<String, String> emptyInput()
     {
-        ListMultimap<String, String> multimap = Multimaps.mutable.list.with(
-                "key1", "value1"
-        );
-
-        assertThatExceptionOfType(AssertionError.class).isThrownBy(() ->
-                        ListMultimapAssert.assertThat(multimap).contains(pair("key1", "value3")))
-                .withMessageContaining("Expecting")
-                .withMessageContaining("but could not find the following element(s)")
-                .withMessageContaining("[key1:value3]");
+        return Multimaps.immutable.list.empty();
     }
 
-    @Test
-    void nullActualWithPair()
+    @Override
+    public ListMultimapAssert<String, String> assertion(ListMultimap<String, String> testData)
     {
-        ListMultimap<String, String> multimap = null;
-        assertThatExceptionOfType(AssertionError.class).isThrownBy(() ->
-                        ListMultimapAssert.assertThat(multimap).contains(pair("key1", "value2")))
-                .withMessageContaining("Expecting actual not to be null");
+        return ListMultimapAssert.assertThat(testData);
     }
 
-    @Test
-    void softAssertionsWithPairPasses()
+    @Override
+    public ListMultimapAssert<String, String> softAssertion(SoftAssertions softAssertions, ListMultimap<String, String> testData)
     {
-        ListMultimap<String, String> multimap = Multimaps.mutable.list.with(
-                "key1", "value1",
-                "key2", "value2"
-        );
-
-        SoftAssertions.assertSoftly(softly -> softly
-                .assertThat(multimap)
-                .contains(pair("key1", "value1"), pair("key2", "value2")));
+        return softAssertions.assertThat(testData);
     }
 
-    @Test
-    public void containsEntriesPasses()
+    @Override
+    public Pair<String, String>[] expectedPairs()
     {
-        ListMultimap<String, String> multimap = Multimaps.mutable.list.with(
-                "key1", "value1",
-                "key2", "value2"
-        );
-
-        ListMultimapAssert.assertThat(multimap).contains(entry("key1", "value1"), entry("key2", "value2"));
+        return new Pair[] {pair("TNG", "Riker"), pair("DS9", "Kira")};
     }
 
-    @Test
-    void containsEntriesFails()
+    @Override
+    public Map.Entry<String, String>[] expectedEntries()
     {
-        ListMultimap<String, String> multimap = Multimaps.mutable.list.with(
-                "key1", "value1"
-        );
-
-        assertThatExceptionOfType(AssertionError.class).isThrownBy(() ->
-                        ListMultimapAssert.assertThat(multimap).contains(entry("key1", "value3")))
-                .withMessageContaining("Expecting")
-                .withMessageContaining("but could not find the following element(s)")
-                .withMessageContaining("[key1:value3]");
+        return new Map.Entry[] {entry("TNG", "Riker"), entry("DS9", "Kira")};
     }
 
-    @Test
-    void nullActualWithEntry()
+    @Override
+    public Pair<String, String> missingPair()
     {
-        ListMultimap<String, String> multimap = null;
-        assertThatExceptionOfType(AssertionError.class).isThrownBy(() ->
-                        ListMultimapAssert.assertThat(multimap).contains(entry("key1", "value2")))
-                .withMessageContaining("Expecting actual not to be null");
+        return pair("VOY", "Kes");
     }
 
-    @Test
-    void softAssertionsWithEntryPasses()
+    @Override
+    public Map.Entry<String, String> missingEntry()
     {
-        ListMultimap<String, String> multimap = Multimaps.mutable.list.with(
-                "key1", "value1",
-                "key2", "value2"
-        );
-
-        SoftAssertions.assertSoftly(softly -> softly
-                .assertThat(multimap)
-                .contains(entry("key1", "value1"), entry("key2", "value2")));
+        return Map.entry("VOY", "Kes");
     }
 }
