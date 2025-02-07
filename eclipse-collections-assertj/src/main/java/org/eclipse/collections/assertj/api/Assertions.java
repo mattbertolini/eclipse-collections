@@ -12,7 +12,9 @@ package org.eclipse.collections.assertj.api;
 
 import org.assertj.core.util.CheckReturnValue;
 import org.eclipse.collections.api.multimap.list.ListMultimap;
+import org.eclipse.collections.api.multimap.set.SetMultimap;
 import org.eclipse.collections.assertj.api.multimap.list.ListMultimapAssert;
+import org.eclipse.collections.assertj.api.multimap.set.SetMultimapAssert;
 
 @CheckReturnValue
 public final class Assertions
@@ -25,5 +27,9 @@ public final class Assertions
     public static <KEY, VALUE> ListMultimapAssert<KEY, VALUE> assertThat(ListMultimap<KEY, VALUE> actual)
     {
         return ListMultimapAssert.assertThat(actual);
+    }
+
+    public static <KEY, VALUE>SetMultimapAssert<KEY, VALUE> assertThat(SetMultimap<KEY, VALUE> actual) {
+        return SetMultimapAssert.assertThat(actual);
     }
 }

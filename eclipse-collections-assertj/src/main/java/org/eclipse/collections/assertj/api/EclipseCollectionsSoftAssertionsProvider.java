@@ -12,12 +12,19 @@ package org.eclipse.collections.assertj.api;
 
 import org.assertj.core.api.SoftAssertionsProvider;
 import org.eclipse.collections.api.multimap.list.ListMultimap;
+import org.eclipse.collections.api.multimap.set.SetMultimap;
 import org.eclipse.collections.assertj.api.multimap.list.ListMultimapAssert;
+import org.eclipse.collections.assertj.api.multimap.set.SetMultimapAssert;
 
 public interface EclipseCollectionsSoftAssertionsProvider extends SoftAssertionsProvider
 {
     default <KEY, VALUE> ListMultimapAssert<KEY, VALUE> assertThat(ListMultimap<KEY, VALUE> actual)
     {
         return this.proxy(ListMultimapAssert.class, ListMultimap.class, actual);
+    }
+
+    default <KEY, VALUE> SetMultimapAssert<KEY, VALUE> assertThat(SetMultimap<KEY, VALUE> actual)
+    {
+        return this.proxy(SetMultimapAssert.class, SetMultimap.class, actual);
     }
 }
