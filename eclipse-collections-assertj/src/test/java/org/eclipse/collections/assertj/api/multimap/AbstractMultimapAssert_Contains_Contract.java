@@ -20,23 +20,23 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public interface AbstractMultimapAssert_Contains_Contract<I extends Multimap, A extends AbstractMultimapAssert>
+public interface AbstractMultimapAssert_Contains_Contract<KEY, VALUE, I extends Multimap<KEY, VALUE>, A extends AbstractMultimapAssert<A, I, KEY, VALUE>>
 {
     I testInput();
 
     I emptyInput();
 
-    A assertion(I testData);
+    A assertion(I testInput);
 
-    A softAssertion(SoftAssertions softAssertions, I testData);
+    A softAssertion(SoftAssertions softAssertions, I testInput);
 
-    Pair[] expectedPairs();
+    Pair<KEY, VALUE>[] expectedPairs();
 
-    Map.Entry[] expectedEntries();
+    Map.Entry<KEY, VALUE>[] expectedEntries();
 
-    Pair missingPair();
+    Pair<KEY, VALUE> missingPair();
 
-    Map.Entry missingEntry();
+    Map.Entry<KEY, VALUE> missingEntry();
 
     /**
      * Test data input that always returns null. Used for testing how assertions handle null.

@@ -17,7 +17,7 @@ import org.eclipse.collections.assertj.api.SoftAssertions;
 import org.eclipse.collections.assertj.api.multimap.AbstractMultimapAssert_HasSize_Contract;
 import org.eclipse.collections.impl.factory.Multimaps;
 
-class ListMultimapAssert_HasSize_Test implements AbstractMultimapAssert_HasSize_Contract<ListMultimap<String, String>, ListMultimapAssert<String, String>>
+class ListMultimapAssert_HasSize_Test implements AbstractMultimapAssert_HasSize_Contract<String, String, ListMultimap<String, String>, ListMultimapAssert<String, String>>
 {
     @Override
     public ListMultimap<String, String> testInput()
@@ -38,15 +38,15 @@ class ListMultimapAssert_HasSize_Test implements AbstractMultimapAssert_HasSize_
     }
 
     @Override
-    public ListMultimapAssert<String, String> assertion(ListMultimap<String, String> testData)
+    public ListMultimapAssert<String, String> assertion(ListMultimap<String, String> testInput)
     {
-        return ListMultimapAssert.assertThat(testData);
+        return ListMultimapAssert.assertThat(testInput);
     }
 
     @Override
-    public ListMultimapAssert<String, String> softAssertion(SoftAssertions softAssertions, ListMultimap<String, String> testData)
+    public ListMultimapAssert<String, String> softAssertion(SoftAssertions softAssertions, ListMultimap<String, String> testInput)
     {
-        return softAssertions.assertThat(testData);
+        return softAssertions.assertThat(testInput);
     }
 
     @Override

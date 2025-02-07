@@ -17,7 +17,7 @@ import org.eclipse.collections.assertj.api.SoftAssertions;
 import org.eclipse.collections.assertj.api.multimap.AbstractMultimapAssert_HasSize_Contract;
 import org.eclipse.collections.impl.factory.Multimaps;
 
-class SetMultimapAssert_HasSize_Test implements AbstractMultimapAssert_HasSize_Contract<SetMultimap<String, String>, SetMultimapAssert<String, String>>
+class SetMultimapAssert_HasSize_Test implements AbstractMultimapAssert_HasSize_Contract<String, String, SetMultimap<String, String>, SetMultimapAssert<String, String>>
 {
 
     @Override
@@ -39,17 +39,17 @@ class SetMultimapAssert_HasSize_Test implements AbstractMultimapAssert_HasSize_C
     }
 
     @Override
-    public SetMultimapAssert<String, String> assertion(SetMultimap<String, String> testData)
+    public SetMultimapAssert<String, String> assertion(SetMultimap<String, String> testInput)
     {
-        return SetMultimapAssert.assertThat(testData);
+        return SetMultimapAssert.assertThat(testInput);
     }
 
     @Override
     public SetMultimapAssert<String, String> softAssertion(
             SoftAssertions softAssertions,
-            SetMultimap<String, String> testData)
+            SetMultimap<String, String> testInput)
     {
-        return softAssertions.assertThat(testData);
+        return softAssertions.assertThat(testInput);
     }
 
     @Override

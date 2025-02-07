@@ -17,7 +17,7 @@ import org.eclipse.collections.assertj.api.SoftAssertions;
 import org.eclipse.collections.assertj.api.multimap.AbstractMultimapAssert_HasDistinctSize_Contract;
 import org.eclipse.collections.impl.factory.Multimaps;
 
-public class BagMultimapAssert_HasDistinctSize_Test implements AbstractMultimapAssert_HasDistinctSize_Contract<BagMultimap<String, String>, BagMultimapAssert<String, String>>
+public class BagMultimapAssert_HasDistinctSize_Test implements AbstractMultimapAssert_HasDistinctSize_Contract<String, String, BagMultimap<String, String>, BagMultimapAssert<String, String>>
 {
     @Override
     public BagMultimap<String, String> testInput()

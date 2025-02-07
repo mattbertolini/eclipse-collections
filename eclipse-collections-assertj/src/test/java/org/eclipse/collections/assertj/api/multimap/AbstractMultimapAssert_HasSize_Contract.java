@@ -10,25 +10,21 @@
 
 package org.eclipse.collections.assertj.api.multimap;
 
-import java.util.function.Function;
-
 import org.eclipse.collections.api.multimap.Multimap;
-import org.eclipse.collections.api.multimap.list.ImmutableListMultimap;
 import org.eclipse.collections.assertj.api.SoftAssertions;
-import org.eclipse.collections.impl.factory.Multimaps;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public interface AbstractMultimapAssert_HasSize_Contract<I extends Multimap, A extends AbstractMultimapAssert>
+public interface AbstractMultimapAssert_HasSize_Contract<KEY, VALUE, I extends Multimap<KEY, VALUE>, A extends AbstractMultimapAssert<A, I, KEY, VALUE>>
 {
     I testInput();
 
     I emptyInput();
 
-    A assertion(I testData);
+    A assertion(I testInput);
 
-    A softAssertion(SoftAssertions softAssertions, I testData);
+    A softAssertion(SoftAssertions softAssertions, I testInput);
 
     int expectedSize();
 

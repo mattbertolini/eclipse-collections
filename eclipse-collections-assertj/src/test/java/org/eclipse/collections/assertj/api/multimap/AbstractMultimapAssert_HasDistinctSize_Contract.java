@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-public interface AbstractMultimapAssert_HasDistinctSize_Contract<I extends Multimap, A extends AbstractMultimapAssert>
+public interface AbstractMultimapAssert_HasDistinctSize_Contract<KEY, VALUE, I extends Multimap<KEY, VALUE>, A extends AbstractMultimapAssert<A, I, KEY, VALUE>>
 {
     I testInput();
 

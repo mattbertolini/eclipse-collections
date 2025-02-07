@@ -21,7 +21,7 @@ import org.eclipse.collections.assertj.api.multimap.AbstractMultimapAssert_Conta
 import org.eclipse.collections.impl.factory.Multimaps;
 import org.eclipse.collections.impl.tuple.Tuples;
 
-public class BagMultimapAssert_Contains_Test implements AbstractMultimapAssert_Contains_Contract<BagMultimap<String, String>, BagMultimapAssert<String, String>>
+public class BagMultimapAssert_Contains_Test implements AbstractMultimapAssert_Contains_Contract<String, String, BagMultimap<String, String>, BagMultimapAssert<String, String>>
 {
     @Override
     public BagMultimap<String, String> testInput()
@@ -42,15 +42,15 @@ public class BagMultimapAssert_Contains_Test implements AbstractMultimapAssert_C
     }
 
     @Override
-    public BagMultimapAssert<String, String> assertion(BagMultimap<String, String> testData)
+    public BagMultimapAssert<String, String> assertion(BagMultimap<String, String> testInput)
     {
-        return BagMultimapAssert.assertThat(testData);
+        return BagMultimapAssert.assertThat(testInput);
     }
 
     @Override
-    public BagMultimapAssert<String, String> softAssertion(SoftAssertions softAssertions, BagMultimap<String, String> testData)
+    public BagMultimapAssert<String, String> softAssertion(SoftAssertions softAssertions, BagMultimap<String, String> testInput)
     {
-        return softAssertions.assertThat(testData);
+        return softAssertions.assertThat(testInput);
     }
 
     @Override

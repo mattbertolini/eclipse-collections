@@ -23,7 +23,7 @@ import org.eclipse.collections.impl.factory.Multimaps;
 import static java.util.Map.entry;
 import static org.eclipse.collections.impl.tuple.Tuples.pair;
 
-public class SetMultimapAssert_Contains_Test implements AbstractMultimapAssert_Contains_Contract<SetMultimap<String, String>, SetMultimapAssert<String, String>>
+public class SetMultimapAssert_Contains_Test implements AbstractMultimapAssert_Contains_Contract<String, String, SetMultimap<String, String>, SetMultimapAssert<String, String>>
 {
     @Override
     public SetMultimap<String, String> testInput()
@@ -44,17 +44,17 @@ public class SetMultimapAssert_Contains_Test implements AbstractMultimapAssert_C
     }
 
     @Override
-    public SetMultimapAssert<String, String> assertion(SetMultimap<String, String> testData)
+    public SetMultimapAssert<String, String> assertion(SetMultimap<String, String> testInput)
     {
-        return SetMultimapAssert.assertThat(testData);
+        return SetMultimapAssert.assertThat(testInput);
     }
 
     @Override
     public SetMultimapAssert<String, String> softAssertion(
             SoftAssertions softAssertions,
-            SetMultimap<String, String> testData)
+            SetMultimap<String, String> testInput)
     {
-        return softAssertions.assertThat(testData);
+        return softAssertions.assertThat(testInput);
     }
 
     @Override
