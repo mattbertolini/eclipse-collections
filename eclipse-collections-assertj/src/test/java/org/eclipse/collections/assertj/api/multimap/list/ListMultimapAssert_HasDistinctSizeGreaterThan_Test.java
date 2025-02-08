@@ -10,39 +10,52 @@
 
 package org.eclipse.collections.assertj.api.multimap.list;
 
-import org.eclipse.collections.api.multimap.list.ImmutableListMultimap;
+import org.eclipse.collections.api.factory.Lists;
+import org.eclipse.collections.api.multimap.list.ListMultimap;
+import org.eclipse.collections.api.multimap.list.MutableListMultimap;
+import org.eclipse.collections.assertj.api.SoftAssertions;
+import org.eclipse.collections.assertj.api.multimap.AbstractMultimapAssert_HasDistinctSizeGreaterThan_Contract;
 import org.eclipse.collections.impl.factory.Multimaps;
-import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-
-class ListMultimapAssert_HasDistinctSizeGreaterThan_Test
+class ListMultimapAssert_HasDistinctSizeGreaterThan_Test implements
+        AbstractMultimapAssert_HasDistinctSizeGreaterThan_Contract<String, String, ListMultimap<String, String>, ListMultimapAssert<String, String>>
 {
-    @Test
-    void passesWhenDistinctSizeIsGreater()
+
+    @Override
+    public ListMultimap<String, String> testInput()
     {
-        ImmutableListMultimap<String, String> multimap =
-                Multimaps.immutable.list.with("Key1", "Value1", "Key1", "Value2", "Key2", "Value3");
-        ListMultimapAssert.assertThat(multimap).hasDistinctSizeGreaterThan(1);
+        MutableListMultimap<String, String> multimap = Multimaps.mutable.list.of();
+        multimap.putAll("TOS", Lists.immutable.of("Kirk", "Spock", "McCoy", "Scotty", "Uhura", "Sulu", "Chekov"));
+        multimap.putAll("TNG", Lists.immutable.of("Picard", "Riker", "Data", "Geordi", "Troi", "Crusher", "Worf"));
+        multimap.putAll("DS9", Lists.immutable.of("Sisko", "Kira", "Obrien", "Dax", "Odo", "Bashir", "Worf", "Quark", "Jake"));
+        multimap.putAll("VOY", Lists.immutable.of("Janeway", "Chakotay", "Torres", "Paris", "The Doctor", "Tuvok", "Kim", "Seven"));
+        multimap.putAll("ENT", Lists.immutable.of("Archer", "Trip", "Tpol", "Reed", "Hoshi", "Phlox", "Mayweather"));
+        return multimap;
     }
 
-    @Test
-    void failsWhenDistinctSizeIsNotGreater()
+    @Override
+    public ListMultimap<String, String> emptyInput()
     {
-        ImmutableListMultimap<String, String> multimap =
-                Multimaps.immutable.list.with("Key1", "Value1", "Key2", "Value2");
-        assertThatExceptionOfType(AssertionError.class)
-                .isThrownBy(() -> ListMultimapAssert.assertThat(multimap).hasDistinctSizeGreaterThan(2))
-                .withMessageContaining("Expecting distinct size of")
-                .withMessageContaining("to be greater than 2 but was 2");
+        return Multimaps.immutable.list.empty();
     }
 
-    @Test
-    void failsNullMultimap()
+    @Override
+    public ListMultimapAssert<String, String> assertion(ListMultimap<String, String> testData)
     {
-        ImmutableListMultimap<String, String> multimap = null;
-        assertThatExceptionOfType(AssertionError.class)
-                .isThrownBy(() -> ListMultimapAssert.assertThat(multimap).hasDistinctSizeGreaterThan(1))
-                .withMessageContaining("Expecting actual not to be null");
+        return ListMultimapAssert.assertThat(testData);
+    }
+
+    @Override
+    public ListMultimapAssert<String, String> softAssertion(
+            SoftAssertions softAssertions,
+            ListMultimap<String, String> testData)
+    {
+        return softAssertions.assertThat(testData);
+    }
+
+    @Override
+    public int expectedGreaterThanSize()
+    {
+        return 3;
     }
 }
